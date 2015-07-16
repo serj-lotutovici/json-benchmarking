@@ -16,30 +16,36 @@
  */
 package sl.moshi.benchmark;
 
-import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import okio.BufferedSource;
-import sl.moshi.benchmark.model.RidiculouslyBigUser;
+import okio.Okio;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
- * Simple entry point class
+ * Provided methods for acquiring the data source and some additional helper methods
  *
  * @author Serj Lotutovici
  */
-public class Benchmark {
+public class BenchmarkHelper {
 
-    public static void main(String[] args) {
-        // TODO Start benchmarking
+    private final String fileName;
+    private final Moshi moshi;
 
-        try {
-            BenchmarkHelper benchmark = new BenchmarkHelper("test_data.json");
-            BufferedSource dataSource = benchmark.getDataSource();
-            Moshi moshi = benchmark.getMoshi();
-            JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
-            userJsonAdapter.fromJson(dataSource);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(1);
-        }
+    public BenchmarkHelper(String fileName) {
+        this.fileName = fileName;
+        this.moshi = new Moshi.Builder().build();
+    }
+
+    /** Opens a file from the resource folder and returns it's {@link okio.Source} */
+    BufferedSource getDataSource() throws FileNotFoundException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream is = classLoader.getResourceAsStream(fileName);
+        return Okio.buffer(Okio.source(is));
+    }
+
+    Moshi getMoshi() {
+        return moshi;
     }
 }
