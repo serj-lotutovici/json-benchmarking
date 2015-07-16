@@ -1,0 +1,12 @@
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+mainClassName = 'sl.moshi.benchmark.Benchmark'
+sourceCompatibility = 1.7
+version = '1.0'
+
+dependencies {
+}

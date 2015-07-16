@@ -1,0 +1,8 @@
+# Ignore ide and build junk
+.gradle/*
+.idea/*
+build/*
+*.iml
+
+# Ignore f**king OS X junk
+.DS_Store
