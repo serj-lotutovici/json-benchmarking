@@ -24,16 +24,16 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * Provided methods for acquiring the data source and some additional helper methods
+ * Provides methods for acquiring and working with the data source
  *
  * @author Serj Lotutovici
  */
-public class BenchmarkHelper {
+public class DataProvider {
 
     private final String fileName;
     private final Moshi moshi;
 
-    public BenchmarkHelper(String fileName) {
+    public DataProvider(String fileName) {
         this.fileName = fileName;
         this.moshi = new Moshi.Builder().build();
     }

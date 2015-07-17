@@ -16,24 +16,24 @@
  */
 package sl.moshi.benchmark;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import okio.BufferedSource;
+import sl.moshi.benchmark.model.RidiculouslyBigUser;
+
 /**
- * Simple entry point class
+ * Benchmarks the binding api of {@link Moshi}
  *
  * @author Serj Lotutovici
  */
-public class Benchmark {
+public class BindingBenchmarker extends Benchmarker {
 
-    public static void main(String[] args) {
-        try {
-            DataProvider provider = new DataProvider("test_data.json");
-
-            Benchmarker bindingBenchmarker = new BindingBenchmarker(1000);
-            bindingBenchmarker.performBenchmark(provider);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(1);
-        }
+    protected BindingBenchmarker(int iterate) {
+        super("Moshi Binding", iterate);
     }
 
+    @Override protected void parse(BufferedSource dataSource, Moshi moshi) throws Exception {
+        JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
+        userJsonAdapter.fromJson(dataSource);
+    }
 }
