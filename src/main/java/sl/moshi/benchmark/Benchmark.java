@@ -30,6 +30,12 @@ public class Benchmark {
             Benchmarker bindingBenchmarker = new BindingBenchmarker(1000);
             bindingBenchmarker.performBenchmark(provider);
 
+            // Just make some space between outputs
+            System.out.println();
+
+            Benchmarker streamingBenchmarker = new StreamingBenchmarker(1000);
+            streamingBenchmarker.performBenchmark(provider);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             System.exit(1);

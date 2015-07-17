@@ -9,14 +9,14 @@ import java.util.List;
 public class WebProfiles {
 
     public List<String> qype = new ArrayList<>();
-    public List<String> google_ = new ArrayList<>();
+    public List<String> google = new ArrayList<>();
     public List<String> other = new ArrayList<>();
     public List<String> homepage = new ArrayList<>();
 
     @Override public String toString() {
         return "WebProfiles{" +
                 "qype=" + qype +
-                ", google_=" + google_ +
+                ", google=" + google +
                 ", other=" + other +
                 ", homepage=" + homepage +
                 '}';
