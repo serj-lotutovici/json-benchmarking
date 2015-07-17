@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Benchmarks the streaming api using Moshi's {@link JsonReader}
+ *
  * @author Serj Lotutovici
  */
 public class StreamingBenchmarker extends Benchmarker {

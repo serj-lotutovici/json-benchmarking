@@ -24,16 +24,29 @@ package sl.moshi.benchmark;
 public class Benchmark {
 
     public static void main(String[] args) {
+
+        // Read the number of iterations per benchmark
+        // By default should be 1000
+        int numberOfIterations = 1000;
+        if (args != null && args.length == 1) {
+            try {
+                numberOfIterations = Integer.parseInt(args[0]);
+            } catch (Exception ignore) {
+            }
+        }
+
+        System.out.println("Number of iterations:" + numberOfIterations);
+
         try {
             DataProvider provider = new DataProvider("test_data.json");
 
-            Benchmarker bindingBenchmarker = new BindingBenchmarker(1000);
+            Benchmarker bindingBenchmarker = new BindingBenchmarker(numberOfIterations);
             bindingBenchmarker.performBenchmark(provider);
 
             // Just make some space between outputs
             System.out.println();
 
-            Benchmarker streamingBenchmarker = new StreamingBenchmarker(1000);
+            Benchmarker streamingBenchmarker = new StreamingBenchmarker(numberOfIterations);
             streamingBenchmarker.performBenchmark(provider);
 
         } catch (Exception ex) {
