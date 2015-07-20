@@ -44,7 +44,7 @@ public class JsonBenchmark {
                         .include(".*" + Benchmarker.class.getSimpleName() + ".*")
                         .warmupIterations(numberOfIterations)
                         .measurementIterations(numberOfIterations)
-                        .forks(0)
+                        .forks(2)
                         .build()
         ).run();
     }

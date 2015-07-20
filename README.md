@@ -13,12 +13,13 @@ Please use(reference) this code at your onw risk.
 - [Moshi streaming api][moshi]
 
 **Benchmark results:**
+*Note that benchmark times also include source file read actions(read file, open stream, close stream)*
 ```
-Benchmark                      Mode  Cnt    Score    Error  Units
-Benchmarker.gsonReflection     avgt    5  122.125 ± 18.121  us/op
-Benchmarker.jacksonReflection  avgt    5   79.761 ±  4.075  us/op
-Benchmarker.moshiReflection    avgt    5  292.003 ±  8.144  us/op
-Benchmarker.moshiStreaming     avgt    5  166.533 ± 10.475  us/op
+Benchmark                      Mode  Cnt    Score   Error  Units
+Benchmarker.gsonReflection     avgt   40  124.316 ± 4.161  us/op
+Benchmarker.jacksonReflection  avgt   40   77.113 ± 1.451  us/op
+Benchmarker.moshiReflection    avgt   40  291.860 ± 2.947  us/op
+Benchmarker.moshiStreaming     avgt   40  173.322 ± 6.444  us/op
 ```
 
 Source for json model is taken from [XING Developers API Example][xingdev]

@@ -55,25 +55,30 @@ public class Benchmarker {
     }
 
     @Benchmark public RidiculouslyBigUser moshiReflection() throws IOException {
-        BufferedSource dataSource = getSourceFromStream(getTestDataStream());
-        JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
-        return userJsonAdapter.fromJson(dataSource);
+        try (InputStream is = getTestDataStream()) {
+            BufferedSource dataSource = getSourceFromStream(is);
+            JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
+            return userJsonAdapter.fromJson(dataSource);
+        }
     }
 
     @Benchmark public RidiculouslyBigUser moshiStreaming() throws IOException {
-        BufferedSource dataSource = getSourceFromStream(getTestDataStream());
-        return new RbuMoshiStreamingParser().readJsonStream(dataSource);
+        try (InputStream is = getTestDataStream()) {
+            BufferedSource dataSource = getSourceFromStream(is);
+            return new RbuMoshiStreamingParser().readJsonStream(dataSource);
+        }
     }
 
     @Benchmark public RidiculouslyBigUser gsonReflection() throws IOException {
-        // Gson doesn't apparently doesn't close the stream
         try (InputStreamReader reader = new InputStreamReader(getTestDataStream())) {
             return gson.fromJson(reader, RidiculouslyBigUser.class);
         }
     }
 
     @Benchmark public RidiculouslyBigUser jacksonReflection() throws IOException {
-        return objectMapper.readValue(getTestDataStream(), RidiculouslyBigUser.class);
+        try (InputStream is = getTestDataStream()) {
+            return objectMapper.readValue(is, RidiculouslyBigUser.class);
+        }
     }
 
     /** Creates a {@link okio.BufferedSource} from provided stream */
