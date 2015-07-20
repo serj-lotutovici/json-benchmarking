@@ -87,8 +87,8 @@ public class RbuMoshiStreamingParser {
                 user.organisation_member = reader.nextString();
             } else if ("languages".equals(name)) {
                 user.languages = readLanguages(reader);
-            } else if ("public_address".equals(name)) {
-                user.public_address = readAddress(reader);
+            } else if ("private_address".equals(name)) {
+                user.private_address = readAddress(reader);
             } else if ("business_address".equals(name)) {
                 user.business_address = readAddress(reader);
             } else if ("web_profiles".equals(name)) {

@@ -26,7 +26,7 @@ public class RidiculouslyBigUser {
     public String interests;
     public String organisation_member;
     public Languages languages;
-    public Address public_address;
+    public Address private_address;
     public Address business_address;
     public WebProfiles web_profiles;
     public InstantMessagingAccounts instant_messaging_accounts;
@@ -54,7 +54,7 @@ public class RidiculouslyBigUser {
                 ", interests='" + interests + '\'' +
                 ", organisation_member='" + organisation_member + '\'' +
                 ", languages=" + languages +
-                ", public_address=" + public_address +
+                ", private_address=" + private_address +
                 ", business_address=" + business_address +
                 ", web_profiles=" + web_profiles +
                 ", instant_messaging_accounts=" + instant_messaging_accounts +

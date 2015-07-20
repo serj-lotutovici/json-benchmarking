@@ -16,6 +16,8 @@
  */
 package sl.moshi.benchmark;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -31,10 +33,11 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Benchmarks the binding api of {@link Moshi}
+ * Benchmarks different approaches for parsing simple json objects
  *
  * @author Serj Lotutovici
  */
+@SuppressWarnings("unused")
 @BenchmarkMode({Mode.AverageTime})
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @State(Scope.Benchmark)
@@ -42,10 +45,13 @@ public class Benchmarker {
 
     private Moshi moshi;
     private Gson gson;
+    private ObjectMapper objectMapper;
 
-    @Setup(Level.Trial) public void setupMoshi() {
+    @Setup(Level.Trial) public void setup() {
         moshi = new Moshi.Builder().build();
         gson = new Gson();
+        objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
     @Benchmark public RidiculouslyBigUser moshiReflection() throws IOException {
@@ -64,6 +70,10 @@ public class Benchmarker {
         try (InputStreamReader reader = new InputStreamReader(getTestDataStream())) {
             return gson.fromJson(reader, RidiculouslyBigUser.class);
         }
+    }
+
+    @Benchmark public RidiculouslyBigUser jacksonReflection() throws IOException {
+        return objectMapper.readValue(getTestDataStream(), RidiculouslyBigUser.class);
     }
 
     /** Creates a {@link okio.BufferedSource} from provided stream */
