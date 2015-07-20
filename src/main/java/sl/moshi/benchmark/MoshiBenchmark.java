@@ -16,18 +16,22 @@
  */
 package sl.moshi.benchmark;
 
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+
 /**
- * Simple entry point class
+ * Starts the benchmark runner
  *
  * @author Serj Lotutovici
  */
-public class Benchmark {
+public class MoshiBenchmark {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RunnerException {
 
         // Read the number of iterations per benchmark
-        // By default should be 1000
-        int numberOfIterations = 1000;
+        // By default should be 10
+        int numberOfIterations = 10;
         if (args != null && args.length == 1) {
             try {
                 numberOfIterations = Integer.parseInt(args[0]);
@@ -35,24 +39,13 @@ public class Benchmark {
             }
         }
 
-        System.out.println("Number of iterations:" + numberOfIterations);
-
-        try {
-            DataProvider provider = new DataProvider("test_data.json");
-
-            Benchmarker bindingBenchmarker = new BindingBenchmarker(numberOfIterations);
-            bindingBenchmarker.performBenchmark(provider);
-
-            // Just make some space between outputs
-            System.out.println();
-
-            Benchmarker streamingBenchmarker = new StreamingBenchmarker(numberOfIterations);
-            streamingBenchmarker.performBenchmark(provider);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.exit(1);
-        }
+        new Runner(
+                new OptionsBuilder()
+                        .include(".*" + Benchmarker.class.getSimpleName() + ".*")
+                        .warmupIterations(numberOfIterations)
+                        .measurementIterations(numberOfIterations)
+                        .forks(0)
+                        .build()
+        ).run();
     }
-
 }

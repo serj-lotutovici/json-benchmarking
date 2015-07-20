@@ -2,5 +2,5 @@
 
 To run the application simply call:
 ```
-./gradlew run -Piterate=[number_of_iterations] // If args not provided 1000 will be used
+./gradlew run -Piterate=[number_of_iterations] // If 'iterate' is not provided 10 will be used as default
 ```

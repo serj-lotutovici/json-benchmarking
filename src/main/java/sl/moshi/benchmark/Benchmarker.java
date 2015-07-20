@@ -16,74 +16,49 @@
  */
 package sl.moshi.benchmark;
 
-import com.google.common.base.Stopwatch;
+import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import okio.BufferedSource;
+import okio.Okio;
+import org.openjdk.jmh.annotations.*;
+import sl.moshi.benchmark.model.RidiculouslyBigUser;
 
-import java.io.PrintStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Does the actual bench marking
+ * Benchmarks the binding api of {@link Moshi}
  *
  * @author Serj Lotutovici
  */
-public abstract class Benchmarker {
+@BenchmarkMode({Mode.AverageTime})
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@State(Scope.Benchmark)
+public class Benchmarker {
 
-    private final String approachName;
-    private final int iterate;
+    private Moshi moshi;
 
-    protected Benchmarker(String approachName, int iterate) {
-        this.approachName = approachName;
-        this.iterate = iterate;
+    @Setup(Level.Trial) public void setupMoshi() {
+        moshi = new Moshi.Builder().build();
     }
 
-    /**
-     * Perform benchmarking for the implemented approach
-     *
-     * @param provider Data provider
-     */
-    public void performBenchmark(DataProvider provider) {
-        log(System.out, "Start");
-
-        double avg = 0.0d;
-        for (int count = 1; count <= iterate; count++) {
-            logProgress(count);
-
-            try {
-                BufferedSource dataSource = provider.getDataSource();
-                Moshi moshi = provider.getMoshi();
-
-                Stopwatch stopwatch = Stopwatch.createStarted();
-                parse(dataSource, moshi);
-                avg += stopwatch.stop().elapsed(TimeUnit.NANOSECONDS) / iterate;
-
-            } catch (Exception ex) {
-                log(System.err, ex.getMessage());
-            } finally {
-                System.gc();
-            }
-        }
-
-        log(System.out, "Average time is: " + avg + " nanoseconds");
+    @Benchmark public RidiculouslyBigUser moshiReflection() throws IOException {
+        BufferedSource dataSource = getDataSource();
+        JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
+        return userJsonAdapter.fromJson(dataSource);
     }
 
-    /** Perform the actual parsing. Should be implemented by every {@link Benchmarker} */
-    protected abstract void parse(BufferedSource dataSource, Moshi moshi) throws Exception;
-
-    /** Simple log */
-    protected void log(PrintStream stream, String msg) {
-        stream.println(String.format("\n[%s]: %s", approachName, msg));
+    @Benchmark public RidiculouslyBigUser moshiStreaming() throws IOException {
+        BufferedSource dataSource = getDataSource();
+        return new RbuMoshiStreamingParser().readJsonStream(dataSource);
     }
 
-    /** Just show the progress in percents */
-    private void logProgress(int progress) {
-        int percentProgress = (progress * 100) / iterate;
-        StringBuilder sb = new StringBuilder("\r[");
-        for (int index = 1; index <= 100; index++) {
-            sb.append(index <= percentProgress ? "=" : " ");
-        }
-        sb.append(String.format("] %d%%", percentProgress));
-        System.out.print(sb.toString());
+    /** Opens a file from the resource folder and returns it's {@link okio.Source} */
+    BufferedSource getDataSource() throws FileNotFoundException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream is = classLoader.getResourceAsStream("test_data.json");
+        return Okio.buffer(Okio.source(is));
     }
 }

@@ -26,21 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Benchmarks the streaming api using Moshi's {@link JsonReader}
+ * {@link RidiculouslyBigUser} parser implementation using {@link Moshi} streaming api
  *
  * @author Serj Lotutovici
  */
-public class StreamingBenchmarker extends Benchmarker {
+public class RbuMoshiStreamingParser {
 
-    protected StreamingBenchmarker(int iterate) {
-        super("Moshi Streaming", iterate);
-    }
-
-    @Override protected void parse(BufferedSource dataSource, Moshi moshi) throws Exception {
-        readJsonStream(dataSource);
-    }
-
-    private RidiculouslyBigUser readJsonStream(BufferedSource source) throws IOException {
+    public RidiculouslyBigUser readJsonStream(BufferedSource source) throws IOException {
         try (JsonReader reader = new JsonReader(source)) {
             return readUser(reader);
         }
