@@ -25,7 +25,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
  *
  * @author Serj Lotutovici
  */
-public class MoshiBenchmark {
+public class JsonBenchmark {
 
     public static void main(String[] args) throws RunnerException {
 
