@@ -15,11 +15,11 @@ Please use(reference) this code at your onw risk.
 **Benchmark results:**
 *Note that benchmark times also include source file read actions(read file, open stream, close stream)*
 ```
-Benchmark                      Mode  Cnt    Score   Error  Units
-Benchmarker.gsonReflection     avgt   40  124.316 ± 4.161  us/op
-Benchmarker.jacksonReflection  avgt   40   77.113 ± 1.451  us/op
-Benchmarker.moshiReflection    avgt   40  291.860 ± 2.947  us/op
-Benchmarker.moshiStreaming     avgt   40  173.322 ± 6.444  us/op
+Benchmark                      Mode  Cnt    Score    Error  Units
+Benchmarker.gsonReflection     avgt   10  130.238 ± 14.227  us/op
+Benchmarker.jacksonReflection  avgt   10   95.266 ± 26.433  us/op
+Benchmarker.moshiReflection    avgt   10  160.126 ±  6.467  us/op
+Benchmarker.moshiStreaming     avgt   10  173.832 ±  7.137  us/op
 ```
 
 Source for json model is taken from [XING Developers API Example][xingdev]

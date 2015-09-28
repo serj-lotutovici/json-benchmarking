@@ -33,7 +33,7 @@ import java.util.List;
 public class RbuMoshiStreamingParser {
 
     public RidiculouslyBigUser readJsonStream(BufferedSource source) throws IOException {
-        try (JsonReader reader = new JsonReader(source)) {
+        try (JsonReader reader = JsonReader.of(source)) {
             return readUser(reader);
         }
     }
