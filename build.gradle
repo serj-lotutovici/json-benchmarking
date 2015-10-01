@@ -4,7 +4,7 @@ repositories {
     mavenCentral()
 }
 
-mainClassName = 'sl.moshi.benchmark.JsonBenchmark'
+mainClassName = 'sl.benchmark.JsonBenchmark'
 sourceCompatibility = 1.7
 version = '1.0'
 
@@ -18,8 +18,11 @@ dependencies {
 }
 
 run {
-    // Check if iterate is provided
-    if (project.hasProperty("iterate")) {
-        args Eval.me(iterate)
-    }
+    def hasIterate = project.hasProperty("iterate");
+    def hasForks = project.hasProperty("forks");
+
+    args = [
+        "${hasIterate ? iterate : 10}",
+        "${hasForks ? forks : 1}"
+    ]
 }

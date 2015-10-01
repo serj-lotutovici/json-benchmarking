@@ -1,11 +1,9 @@
 # Json parsers benchmarking
-
 This is a simple benchmark example that compares different json parsing approaches and was done for the sake
 of simply doing so. It doesn't claim and/or insist on being ultimately precisest or trust worthy.
 Please use(reference) this code at your onw risk.
 
 ##Benchmark cases
-
 **Current approaches tested:**
 - [Gson data binding][gson]
 - [Jackson data binding][jackson]
@@ -16,21 +14,29 @@ Please use(reference) this code at your onw risk.
 *Note that benchmark times also include source file read actions(read file, open stream, close stream)*
 ```
 Benchmark                      Mode  Cnt    Score    Error  Units
-Benchmarker.gsonReflection     avgt   10  130.238 ± 14.227  us/op
-Benchmarker.jacksonReflection  avgt   10   95.266 ± 26.433  us/op
-Benchmarker.moshiReflection    avgt   10  160.126 ±  6.467  us/op
-Benchmarker.moshiStreaming     avgt   10  173.832 ±  7.137  us/op
+Benchmarker.gsonReflection     avgt   10  126.066 ±  6.997  us/op
+Benchmarker.jacksonReflection  avgt   10   82.953 ± 17.398  us/op
+Benchmarker.moshiReflection    avgt   10  156.100 ±  9.562  us/op
+Benchmarker.moshiStreaming     avgt   10  170.376 ±  5.364  us/op
 ```
 
 Source for json model is taken from [XING Developers API Example][xingdev]
 
 ##Run on your machine
+This project required Java 7 (or higher) to run. In the root folder of the project simply run:
+
 ```
-./gradlew run -Piterate=[number_of_iterations] // If 'iterate' is not provided 10 will be used as default
+./gradlew clean run -Piterate=[number_of_iterations] -Pforks=[number_of_forks]
 ```
+
+**Defaults:**
+- _NOTE:_ If `iterate` or `forks` are not provided default values will be used
+- by default `iterate` is set to **10**
+- by default `forks` is set to **1**
+
+
 ##Used tools
-This code uses [JMH][jmh] for benchmarking results. Special thanks to [Jesse Wilson][jw] for introducing me to
-this tool.
+This code uses [JMH][jmh] for benchmarking results. 
 
 ##License
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -44,4 +50,3 @@ this tool.
 [moshi]: https://github.com/square/moshi
 [xingdev]: https://dev.xing.com/docs/resources
 [jmh]: http://openjdk.java.net/projects/code-tools/jmh/
-[jw]: https://github.com/swankjesse
