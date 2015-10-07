@@ -490,7 +490,7 @@ class RbuMoshiStreamingParser {
 
       if ("qype".equals(name)) {
         webProfiles.qype = readStringArray(reader);
-      } else if ("google".equals(name)) {
+      } else if ("google+".equals(name)) {
         webProfiles.google = readStringArray(reader);
       } else if ("other".equals(name)) {
         webProfiles.other = readStringArray(reader);

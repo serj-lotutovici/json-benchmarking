@@ -12,4 +12,12 @@ public class TimeZone {
         ", utc_offset=" + utc_offset +
         '}';
   }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setUtcOffset(double utcOffset) {
+    this.utc_offset = utcOffset;
+  }
 }

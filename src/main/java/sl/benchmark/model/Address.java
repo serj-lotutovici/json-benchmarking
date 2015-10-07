@@ -26,4 +26,40 @@ public class Address {
         ", mobile_phone='" + mobile_phone + '\'' +
         '}';
   }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public void setFax(String fax) {
+    this.fax = fax;
+  }
+
+  public void setMobilePhone(String mobilePhone) {
+    this.mobile_phone = mobilePhone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public void setProvince(String province) {
+    this.province = province;
+  }
+
+  public void setStreet(String street) {
+    this.street = street;
+  }
+
+  public void setZipCode(String zipCode) {
+    this.zip_code = zipCode;
+  }
 }

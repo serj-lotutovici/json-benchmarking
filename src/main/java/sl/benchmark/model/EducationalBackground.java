@@ -19,4 +19,20 @@ public class EducationalBackground {
         ", qualifications=" + qualifications +
         '}';
   }
+
+  public void setDegree(String degree) {
+    this.degree = degree;
+  }
+
+  public void setPrimarySchool(School primarySchool) {
+    this.primary_school = primarySchool;
+  }
+
+  public void setSchools(List<School> schools) {
+    this.schools = schools;
+  }
+
+  public void setQualifications(List<String> qualifications) {
+    this.qualifications = qualifications;
+  }
 }

@@ -22,4 +22,32 @@ public class School {
         ", end_date='" + end_date + '\'' +
         '}';
   }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setDegree(String degree) {
+    this.degree = degree;
+  }
+
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
+  public void setBeginDate(String beginDate) {
+    this.begin_date = beginDate;
+  }
+
+  public void setEndDate(String endDate) {
+    this.end_date = endDate;
+  }
 }

@@ -14,4 +14,16 @@ public class Award {
         ", url='" + url + '\'' +
         '}';
   }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setDateAwarded(int dateAwarded) {
+    this.date_awarded = dateAwarded;
+  }
 }

@@ -17,4 +17,16 @@ public class ProfessionalExperience {
         ", awards=" + awards +
         '}';
   }
+
+  public void setPrimaryCompany(Company primaryCompany) {
+    this.primary_company = primaryCompany;
+  }
+
+  public void setCompanies(List<Company> companies) {
+    this.companies = companies;
+  }
+
+  public void setAwards(List<Award> awards) {
+    this.awards = awards;
+  }
 }

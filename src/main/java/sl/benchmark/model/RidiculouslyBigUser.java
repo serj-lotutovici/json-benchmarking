@@ -31,8 +31,7 @@ public class RidiculouslyBigUser {
   public EducationalBackground educational_background;
   public PhotoUrls photo_urls;
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "RidiculouslyBigUser{" +
         "id='" + id + '\'' +
         ", first_name='" + first_name + '\'' +
@@ -60,5 +59,105 @@ public class RidiculouslyBigUser {
         ", educational_background=" + educational_background +
         ", photo_urls=" + photo_urls +
         '}';
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setFirstName(String firstName) {
+    this.first_name = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.last_name = lastName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.display_name = displayName;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
+
+  public void setBirthday(BirthDate birthday) {
+    this.birth_date = birthday;
+  }
+
+  public void setPageName(String pageName) {
+    this.page_name = pageName;
+  }
+
+  public void setPermalink(String permalink) {
+    this.permalink = permalink;
+  }
+
+  public void setEmploymentStatus(String employmentStatus) {
+    this.employment_status = employmentStatus;
+  }
+
+  public void setActiveEmail(String activeEmail) {
+    this.active_email = activeEmail;
+  }
+
+  public void setPremiumServicesFromStringList(List<String> premiumServicesFromStringList) {
+    this.premium_services = premiumServicesFromStringList;
+  }
+
+  public void setBadgesFromStringList(List<String> badgesFromStringList) {
+    this.badges = badgesFromStringList;
+  }
+
+  public void setWants(String wants) {
+    this.wants = wants;
+  }
+
+  public void setHaves(String haves) {
+    this.haves = haves;
+  }
+
+  public void setInterests(String interests) {
+    this.interests = interests;
+  }
+
+  public void setOrganisationMember(String organisationMember) {
+    this.organisation_member = organisationMember;
+  }
+
+  public void setPrivateAddress(Address privateAddress) {
+    this.private_address = privateAddress;
+  }
+
+  public void setBusinessAddress(Address businessAddress) {
+    this.business_address = businessAddress;
+  }
+
+  public void setEducationBackground(EducationalBackground educationBackground) {
+    this.educational_background = educationBackground;
+  }
+
+  public void setPhotoUrls(PhotoUrls photoUrls) {
+    this.photo_urls = photoUrls;
+  }
+
+  public void setProfessionalExperience(ProfessionalExperience professionalExperience) {
+    this.professional_experience = professionalExperience;
+  }
+
+  public void setTimeZone(TimeZone timeZone) {
+    this.time_zone = timeZone;
+  }
+
+  public void setWebProfiels(WebProfiles webProfiels) {
+    this.web_profiles = webProfiels;
+  }
+
+  public void setMessagingAccounts(InstantMessagingAccounts messagingAccounts) {
+    this.instant_messaging_accounts = messagingAccounts;
+  }
+
+  public void setLanguages(Languages languages) {
+    this.languages = languages;
   }
 }

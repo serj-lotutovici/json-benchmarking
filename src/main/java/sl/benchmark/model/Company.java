@@ -1,5 +1,6 @@
 package sl.benchmark.model;
 
+import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +41,57 @@ public class Company {
         ", until_now=" + until_now +
         ", discipline=" + discipline +
         '}';
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setBeginDate(String beginDate) {
+    this.begin_date = beginDate;
+  }
+
+  public void setCareerLevel(String careerLevel) {
+    this.career_level = careerLevel;
+  }
+
+  public void setCompanySize(String companySize) {
+    this.company_size = companySize;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setEndDate(String endDate) {
+    this.end_date = endDate;
+  }
+
+  public void setFormOfEmployment(String formOfEmployment) {
+    this.form_of_employment = formOfEmployment;
+  }
+
+  public void setIndustries(List<Industry> industries) {
+    this.industries = industries;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setUntilNow(boolean untilNow) {
+    this.until_now = untilNow;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
   }
 }

@@ -1,14 +1,17 @@
 package sl.benchmark;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import android.util.JsonReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.concurrent.TimeUnit;
 import okio.BufferedSource;
 import okio.Okio;
@@ -39,17 +42,14 @@ public class Benchmarker {
   private Gson gson;
   private ObjectMapper objectMapper;
 
-  @Setup(Level.Trial)
-  public void setup() {
+  @Setup(Level.Trial) public void setup() {
     moshi = new Moshi.Builder().build();
     moshiStreamingParser = new RbuMoshiStreamingParser();
     gson = new Gson();
     objectMapper = new ObjectMapper();
-    objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
   }
 
-  @Benchmark
-  public RidiculouslyBigUser moshiReflection() throws IOException {
+  @Benchmark public RidiculouslyBigUser moshiReflection() throws IOException {
     try (InputStream is = getTestDataStream()) {
       BufferedSource dataSource = getSourceFromStream(is);
       JsonAdapter<RidiculouslyBigUser> userJsonAdapter = moshi.adapter(RidiculouslyBigUser.class);
@@ -57,36 +57,57 @@ public class Benchmarker {
     }
   }
 
-  @Benchmark
-  public RidiculouslyBigUser moshiStreaming() throws IOException {
+  @Benchmark public RidiculouslyBigUser moshiStreaming() throws IOException {
     try (InputStream is = getTestDataStream()) {
       BufferedSource dataSource = getSourceFromStream(is);
       return moshiStreamingParser.readJsonStream(dataSource);
     }
   }
 
-  @Benchmark
-  public RidiculouslyBigUser gsonReflection() throws IOException {
+  @Benchmark public RidiculouslyBigUser gsonReflection() throws IOException {
     try (InputStreamReader reader = new InputStreamReader(getTestDataStream())) {
       return gson.fromJson(reader, RidiculouslyBigUser.class);
     }
   }
 
-  @Benchmark
-  public RidiculouslyBigUser jacksonReflection() throws IOException {
+  @Benchmark public RidiculouslyBigUser jacksonReflection() throws IOException {
     try (InputStream is = getTestDataStream()) {
       return objectMapper.readValue(is, RidiculouslyBigUser.class);
     }
   }
 
-  /** Creates a {@link okio.BufferedSource} from provided stream */
+  @Benchmark public RidiculouslyBigUser androidStreaming() throws IOException {
+    Reader stringReader = null;
+    try (InputStream is = getTestDataStream()) {
+      stringReader = new StringReader(inputStreamToString(is));
+      JsonReader reader = new JsonReader(stringReader);
+      return RbuAndroidStreamingParser.parseUser(reader);
+    } finally {
+      assert stringReader != null;
+      stringReader.close();
+    }
+  }
+
+  /** Creates a {@link okio.BufferedSource} from provided stream. */
   BufferedSource getSourceFromStream(InputStream is) throws FileNotFoundException {
     return Okio.buffer(Okio.source(is));
   }
 
-  /** Open the test data file stream */
-  private InputStream getTestDataStream() {
+  /** Open the test data file stream. */
+  InputStream getTestDataStream() {
     ClassLoader classLoader = getClass().getClassLoader();
     return classLoader.getResourceAsStream("test_data.json");
+  }
+
+  /** Convert input stream to string. */
+  static String inputStreamToString(InputStream in) throws IOException {
+    StringBuilder result = new StringBuilder();
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+    }
+    return result.toString();
   }
 }
